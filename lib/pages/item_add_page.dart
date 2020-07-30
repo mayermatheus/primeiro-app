@@ -9,7 +9,10 @@ class ItemAddPage extends StatelessWidget {
         floatingActionButton: FloatingActionButton(
           backgroundColor: Colors.yellow,
           onPressed: () {
-            Navigator.pop(context, _controlerText.text);
+            Navigator.pop(
+                context,
+                _controlerText.text =
+                    _controlerText.text.isEmpty ? '' : _controlerText.text);
           },
           child: Icon(Icons.done),
         ),
