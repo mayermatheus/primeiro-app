@@ -7,7 +7,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  String texto = '';
+  List<String> _list = [];
 
   @override
   Widget build(BuildContext context) {
@@ -24,14 +24,38 @@ class _HomePageState extends State<HomePage> {
           );
 
           setState(() {
-            texto = result;
+            if (result.isNotEmpty) {
+              _list.add(result);
+            }
           });
         },
       ),
       appBar: AppBar(
         title: Text('Primeiro App'),
       ),
-      body: Center(child: Text(texto)),
+      body: _list.length > 0
+          ? ListView.builder(
+              itemCount: _list.length,
+              itemBuilder: (BuildContext context, int index) {
+                return Dismissible(
+                  background: Container(
+                    color: Colors.red,
+                  ),
+                  onDismissed: (direction) {
+                    setState(() {
+                      _list.removeAt(index);
+                    });
+                  },
+                  child: ListTile(
+                    title: Text(_list[index]),
+                  ),
+                  key: Key(_list[index]),
+                );
+              },
+            )
+          : Center(
+              child: Text('Não há nenhum item!'),
+            ),
     );
   }
 }
